@@ -10,13 +10,7 @@ import {
 } from '~/components/card';
 import { EllipsisHorizontalIcon, FlagIcon } from '~/components/icons/solid';
 import { Tag } from '~/components/tag/tag';
-import { TaskAction } from '~/components/task-action';
-import {
-  TaskCard,
-  TASK_CARD_CONTENT_SLOT,
-  TASK_CARD_INFO_SLOT,
-  TASK_CARD_TAGS_SLOT,
-} from '~/components/task-card';
+import { TaskCard } from '~/components/task-card';
 import { Section } from './section';
 
 export const Draggable = component$(() => {
@@ -105,23 +99,27 @@ export default component$(() => {
       </Section>
 
       <Section>
-        <TaskCard>
-          <Tag q:slot={TASK_CARD_TAGS_SLOT}>Task</Tag>
-          <Tag q:slot={TASK_CARD_TAGS_SLOT}>Card</Tag>
+        <TaskCard
+          task={{
+            id: '1',
+            tags: ['Task', 'Card'],
+            content: 'Content',
+            createdAt: new Date(),
+            modifiedAt: new Date(),
+            important: false,
+          }}
+        />
 
-          <p q:slot={TASK_CARD_CONTENT_SLOT}>Content</p>
-
-          <Box q:slot={TASK_CARD_INFO_SLOT} gap={2}>
-            <ButtonIcon>
-              <FlagIcon sm className="text-gray-500" />
-            </ButtonIcon>
-            <span className="text-sm text-gray-500">Nov 24</span>
-          </Box>
-
-          <TaskAction q:slot={TASK_CARD_INFO_SLOT} text="Nov 24">
-            <FlagIcon sm className="text-gray-500" />
-          </TaskAction>
-        </TaskCard>
+        <TaskCard
+          task={{
+            id: '1',
+            tags: ['Task', 'Card'],
+            content: 'Content',
+            createdAt: new Date(),
+            modifiedAt: new Date(),
+            important: true,
+          }}
+        />
       </Section>
 
       <Section>
