@@ -22,9 +22,9 @@ export const Card = component$(({ full, className }: ICardProps) => {
       <header className="flex justify-between">
         <Slot name={CARD_HEADER_SLOT} />
 
-        <span className="flex-grow-0">
+        <div className="flex-grow-0 flex items-center">
           <Slot name={CARD_MENU_SLOT} />
-        </span>
+        </div>
       </header>
 
       <Slot name={CARD_CONTENT_SLOT} />

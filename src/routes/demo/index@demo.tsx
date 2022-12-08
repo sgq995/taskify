@@ -4,14 +4,19 @@ import { Box } from '~/components/box/box';
 import { ButtonIcon } from '~/components/button-icon';
 import {
   Card,
-  CardContent,
-  CardHeader,
   CARD_CONTENT_SLOT,
   CARD_HEADER_SLOT,
   CARD_MENU_SLOT,
 } from '~/components/card';
 import { EllipsisHorizontalIcon, FlagIcon } from '~/components/icons/solid';
 import { Tag } from '~/components/tag/tag';
+import { TaskAction } from '~/components/task-action';
+import {
+  TaskCard,
+  TASK_CARD_CONTENT_SLOT,
+  TASK_CARD_INFO_SLOT,
+  TASK_CARD_TAGS_SLOT,
+} from '~/components/task-card';
 import { Section } from './section';
 
 export const Draggable = component$(() => {
@@ -44,7 +49,7 @@ export const DropTarget = component$(() => {
 
 export default component$(() => {
   return (
-    <main className="bg-slate-200 min-w-full min-h-screen flex flex-col gap-8">
+    <main className="bg-slate-200 min-w-full min-h-screen py-8 flex flex-col gap-8">
       <Section>
         <Box>
           <FlagIcon />
@@ -74,22 +79,19 @@ export default component$(() => {
 
       <Section>
         <Card>
-          <CardHeader q:slot={CARD_HEADER_SLOT}>
+          <Box q:slot={CARD_HEADER_SLOT}>
             <Tag>Test</Tag>
-          </CardHeader>
+          </Box>
 
-          <CardContent q:slot={CARD_CONTENT_SLOT}>
+          <Box q:slot={CARD_CONTENT_SLOT}>
             Create the card component for tasks
-          </CardContent>
+          </Box>
         </Card>
 
         <div className="w-72">
           <Card full>
             <Box direction="row" gap={2} wrap="wrap" q:slot={CARD_HEADER_SLOT}>
               <Tag>Filled</Tag>
-              <Tag>Card</Tag>
-              <Tag>Card</Tag>
-              <Tag>Card</Tag>
               <Tag>Card</Tag>
             </Box>
 
@@ -100,6 +102,26 @@ export default component$(() => {
             <div q:slot={CARD_CONTENT_SLOT}>A filled card</div>
           </Card>
         </div>
+      </Section>
+
+      <Section>
+        <TaskCard>
+          <Tag q:slot={TASK_CARD_TAGS_SLOT}>Task</Tag>
+          <Tag q:slot={TASK_CARD_TAGS_SLOT}>Card</Tag>
+
+          <p q:slot={TASK_CARD_CONTENT_SLOT}>Content</p>
+
+          <Box q:slot={TASK_CARD_INFO_SLOT} gap={2}>
+            <ButtonIcon>
+              <FlagIcon sm className="text-gray-500" />
+            </ButtonIcon>
+            <span className="text-sm text-gray-500">Nov 24</span>
+          </Box>
+
+          <TaskAction q:slot={TASK_CARD_INFO_SLOT} text="Nov 24">
+            <FlagIcon sm className="text-gray-500" />
+          </TaskAction>
+        </TaskCard>
       </Section>
 
       <Section>
