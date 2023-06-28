@@ -20,7 +20,7 @@ export const Textarea = component$<TextareaProps>(
         {label}
         <textarea
           {...textareaProps}
-          class="w-full border-b border-solid border-b-gray-400 bg-transparent text-base font-normal outline-none focus:border-sky-400"
+          class="w-full rounded border border-solid border-gray-400 bg-transparent p-1 text-base font-normal outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-200"
         />
       </label>
     );
