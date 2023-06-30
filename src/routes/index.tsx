@@ -3,7 +3,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { TbPlus } from '@qwikest/icons/tablericons';
 import { Button } from '~/components/button';
 import { Task, TaskForm } from '~/components/tasks';
-import { createTask } from '~/store';
+import { createTask, deleteTask } from '~/store';
 import { loadLocalStorage } from '~/store/local-storage';
 import type { Store } from '~/store/local-storage';
 
@@ -21,12 +21,21 @@ export default component$(() => {
     <div class="w-100 flex min-h-screen flex-col items-center bg-gray-200">
       <section class="container flex flex-col items-center gap-4 py-8">
         {store.value?.default.map(({ uuid, title, description }) => (
-          <Task key={uuid} title={title} description={description} />
+          <Task
+            key={uuid}
+            title={title}
+            description={description}
+            onDelete$={async () => {
+              await deleteTask({ uuid });
+              store.value = await loadLocalStorage();
+            }}
+          />
         ))}
 
         <TaskForm
           onSave$={async (task) => {
             await createTask(task);
+            store.value = await loadLocalStorage();
           }}
         />
       </section>

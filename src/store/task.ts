@@ -44,3 +44,16 @@ export async function createTask(task: CreatableTask) {
   };
   await saveLocalStorage(store);
 }
+
+export const DeletableTask = Task.pick({ uuid: true });
+
+export type DeletableTask = z.infer<typeof DeletableTask>;
+
+export async function deleteTask(task: DeletableTask) {
+  let store = await loadLocalStorage();
+  store = {
+    ...store,
+    default: store.default.filter(({ uuid }) => uuid !== task.uuid),
+  };
+  await saveLocalStorage(store);
+}
