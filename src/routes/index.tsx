@@ -3,8 +3,9 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { TbPlus } from '@qwikest/icons/tablericons';
 import { Button } from '~/components/button';
 import { Task, TaskForm } from '~/components/tasks';
-import { loadLocalStorage } from '~/store';
-import type { Store } from '~/store';
+import { createTask } from '~/store';
+import { loadLocalStorage } from '~/store/local-storage';
+import type { Store } from '~/store/local-storage';
 
 export default component$(() => {
   const store = useSignal<Store>();
@@ -23,9 +24,11 @@ export default component$(() => {
           <Task key={uuid} title={title} description={description} />
         ))}
 
-        <Task title="title" description="description" />
-
-        <TaskForm onSave$={(task) => console.log(task)} />
+        <TaskForm
+          onSave$={async (task) => {
+            await createTask(task);
+          }}
+        />
       </section>
 
       <div class=" relative flex w-80 flex-col justify-center">
