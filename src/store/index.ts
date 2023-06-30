@@ -17,6 +17,10 @@ const Task = z.object({
 
 export type Task = z.infer<typeof Task>;
 
+const CreatableTask = Task.omit({ uuid: true });
+
+export type CreatableTask = z.infer<typeof CreatableTask>;
+
 const Store = z.object({
   /**
    * The list of tasks the user has added
