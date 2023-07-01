@@ -3,7 +3,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import { TbPlus } from '@qwikest/icons/tablericons';
 import { Button } from '~/components/button';
 import { Task, TaskForm } from '~/components/tasks';
-import { createTask, deleteTask } from '~/store';
+import { createTask, deleteTask, updateTask } from '~/store';
 import { loadLocalStorage } from '~/store/local-storage';
 import type { Store } from '~/store/local-storage';
 
@@ -25,6 +25,10 @@ export default component$(() => {
             key={uuid}
             title={title}
             description={description}
+            onUpdate$={async (task) => {
+              await updateTask({ ...task, uuid });
+              store.value = await loadLocalStorage();
+            }}
             onDelete$={async () => {
               await deleteTask({ uuid });
               store.value = await loadLocalStorage();

@@ -45,6 +45,33 @@ export async function createTask(task: CreatableTask) {
   await saveLocalStorage(store);
 }
 
+export const UpdatableTask = Task;
+
+export type UpdatableTask = z.infer<typeof UpdatableTask>;
+
+export async function updateTask(task: UpdatableTask) {
+  let store = await loadLocalStorage();
+  store = {
+    ...store,
+    default: store.default.map(({ uuid, title, description }) => {
+      if (uuid === task.uuid) {
+        return {
+          uuid,
+          title: task.title,
+          description: task.description,
+        };
+      }
+
+      return {
+        uuid,
+        title,
+        description,
+      };
+    }),
+  };
+  await saveLocalStorage(store);
+}
+
 export const DeletableTask = Task.pick({ uuid: true });
 
 export type DeletableTask = z.infer<typeof DeletableTask>;
