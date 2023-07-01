@@ -9,6 +9,7 @@ import type { Store } from '~/store/local-storage';
 
 export default component$(() => {
   const store = useSignal<Store>();
+  const isFormShown = useSignal<boolean>(false);
 
   useVisibleTask$(
     async () => {
@@ -35,21 +36,38 @@ export default component$(() => {
             }}
           />
         ))}
-
-        <TaskForm
-          onSave$={async (task) => {
-            await createTask(task);
-            store.value = await loadLocalStorage();
-          }}
-        />
       </section>
 
-      <div class=" relative flex w-80 flex-col justify-center">
-        <hr class="border-b-solid border-b border-b-gray-100 " />
-        <Button class="absolute left-1/2 -translate-x-1/2 rounded-full">
-          <TbPlus class="stroke-2 text-xl" />
-        </Button>
-      </div>
+      <section class="container flex flex-col items-center gap-8">
+        <div class="relative flex w-80 flex-col justify-center">
+          <hr class="border-b-solid border-b border-b-gray-100 " />
+          <Button
+            class="absolute left-1/2 -translate-x-1/2 rounded-full"
+            onClick$={() => {
+              isFormShown.value = true;
+            }}
+          >
+            <TbPlus class="stroke-2 text-xl" />
+          </Button>
+        </div>
+
+        <div
+          class={[
+            'overflow-hidden transition-transform duration-300',
+            {
+              'scale-y-0': !isFormShown.value,
+              'scale-y-100': isFormShown.value,
+            },
+          ]}
+        >
+          <TaskForm
+            onSave$={async (task) => {
+              await createTask(task);
+              store.value = await loadLocalStorage();
+            }}
+          />
+        </div>
+      </section>
     </div>
   );
 });
