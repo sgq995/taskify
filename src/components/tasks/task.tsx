@@ -1,5 +1,11 @@
 import type { PropFunction } from '@builder.io/qwik';
-import { $, component$, useSignal, useStore } from '@builder.io/qwik';
+import {
+  $,
+  component$,
+  useSignal,
+  useStore,
+  useVisibleTask$,
+} from '@builder.io/qwik';
 import { Card, CardContent, CardHeader, CardTitle } from '../cards';
 import { CardTop } from '../cards/card-top';
 import { Button } from '../button';
@@ -43,6 +49,20 @@ export const Task = component$<TaskProps>(
       isEditing.description = false;
     });
 
+    useVisibleTask$(({ track }) => {
+      track(() => isEditing.title);
+      if (isEditing.title) {
+        titleRef.value?.focus();
+      }
+    });
+
+    useVisibleTask$(({ track }) => {
+      track(() => isEditing.description);
+      if (isEditing.description) {
+        descriptionRef.value?.focus();
+      }
+    });
+
     return (
       <Card>
         <CardTop>
@@ -58,7 +78,7 @@ export const Task = component$<TaskProps>(
           {isEditing.title ? (
             <Input
               ref={titleRef}
-              label="title"
+              label="Title"
               value={title}
               autoFocus
               onBlur$={handleTitleUpdate}
